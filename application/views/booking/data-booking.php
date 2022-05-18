@@ -40,3 +40,12 @@
                     <hr>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <a class="btn btn-sm btn-outline-primary" href="<?php echo base_url(); ?>"><span class="fas fw fa-play"></span> Lanjutkan Booking Buku</a>
+                    <a class="btn btn-sm btn-outline-success" href="<?php echo base_url() . 'booking/bookingSelesai/' . $this->session->userdata('id_user'); ?>"><span class="fas fw fa-stop"></span> Selesaikan Booking</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+</div>

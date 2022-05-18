@@ -7,8 +7,8 @@ class Home extends CI_Controller
 		parent::__construct();
 	}
 
-	public function index()
-	{
+public function index()
+{
 		$data = [
 			'judul' => "Katalog Buku",
 			'buku' => $this->ModelBuku->getBuku()->result(),
