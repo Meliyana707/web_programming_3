@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2022 at 04:15 PM
+-- Generation Time: Jun 12, 2022 at 07:15 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.23
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `booking`
+-- Database: `pustaka`
 --
 
 -- --------------------------------------------------------
@@ -32,14 +32,7 @@ CREATE TABLE `booking` (
   `tgl_booking` date NOT NULL,
   `batas_ambil` date NOT NULL,
   `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`id_booking`, `tgl_booking`, `batas_ambil`, `id_user`) VALUES
-('09062022001', '2022-06-09', '2022-06-11', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -51,14 +44,7 @@ CREATE TABLE `booking_detail` (
   `id` int(11) NOT NULL,
   `id_booking` varchar(12) NOT NULL,
   `id_buku` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `booking_detail`
---
-
-INSERT INTO `booking_detail` (`id`, `id_booking`, `id_buku`) VALUES
-(4, '09062022001', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -85,7 +71,7 @@ CREATE TABLE `buku` (
 --
 
 INSERT INTO `buku` (`id`, `judul_buku`, `id_kategori`, `pengarang`, `penerbit`, `tahun_terbit`, `isbn`, `stok`, `dipinjam`, `dibooking`, `image`) VALUES
-(1, 'Statistika dengan Program Komputer', 1, 'Ahmad Kholiqul Amin', 'Deep Publish', 2014, '9786022809432', 5, 1, 2, 'img1557402455.jpg'),
+(1, 'Statistika dengan Program Komputer', 1, 'Ahmad Kholiqul Amin', 'Deep Publish', 2014, '9786022809432', 6, 1, 1, 'img1557402455.jpg'),
 (2, 'Mudah Belajar Komputer untuk Anak', 1, 'Bambang Agus Setiawan', 'Huta Media', 2014, '9786025118500', 5, 3, 1, 'img1557402397.jpg'),
 (5, 'PHP Komplet', 1, 'Jubilee', 'Elex Media Komputindo', 2017, '8346753547', 5, 1, 1, 'img1555522493.jpg'),
 (10, 'Detektif Conan Ep 200', 9, 'Okigawa sasuke', 'Cultura', 2016, '874387583987', 5, 0, 0, 'img1557401465.jpg'),
@@ -105,10 +91,21 @@ INSERT INTO `buku` (`id`, `judul_buku`, `id_kategori`, `pengarang`, `penerbit`, 
 --
 
 CREATE TABLE `detail_pinjam` (
-  `no_pinjam` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `no_pinjam` varchar(12) NOT NULL,
   `id_buku` int(11) NOT NULL,
   `denda` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_pinjam`
+--
+
+INSERT INTO `detail_pinjam` (`no_pinjam`, `id_buku`, `denda`) VALUES
+('09062022001', 1, 5000),
+('09062022001', 2, 5000),
+('09062022002', 1, 5000),
+('09062022002', 2, 5000),
+('09062022002', 5, 5000);
 
 -- --------------------------------------------------------
 
@@ -139,19 +136,51 @@ INSERT INTO `kategori` (`id`, `kategori`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL,
+  `menu` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`id`, `menu`) VALUES
+(1, 'Admin'),
+(2, 'User'),
+(3, 'Menu'),
+(4, 'Utility'),
+(5, 'Buku'),
+(6, 'Anggota'),
+(7, 'Laporan');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pinjam`
 --
 
 CREATE TABLE `pinjam` (
-  `no_pinjam` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `no_pinjam` varchar(12) NOT NULL,
   `tgl_pinjam` date NOT NULL,
-  `id_booking` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `id_booking` varchar(12) NOT NULL,
   `id_user` int(11) NOT NULL,
   `tgl_kembali` date NOT NULL,
   `tgl_pengembalian` date NOT NULL,
-  `status` enum('Pinjam','Kembali') CHARACTER SET utf8mb4 NOT NULL DEFAULT 'Pinjam',
+  `status` enum('Pinjam','Kembali') NOT NULL DEFAULT 'Pinjam',
   `total_denda` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pinjam`
+--
+
+INSERT INTO `pinjam` (`no_pinjam`, `tgl_pinjam`, `id_booking`, `id_user`, `tgl_kembali`, `tgl_pengembalian`, `status`, `total_denda`) VALUES
+('09062022001', '2022-06-09', '09062022001', 17, '0000-00-00', '2022-06-09', 'Kembali', 0),
+('09062022002', '2022-06-09', '09062022001', 17, '2022-06-12', '2022-06-09', 'Kembali', 0);
 
 -- --------------------------------------------------------
 
@@ -189,7 +218,14 @@ CREATE TABLE `temp` (
   `penulis` varchar(128) NOT NULL,
   `penerbit` varchar(128) NOT NULL,
   `tahun_terbit` year(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `temp`
+--
+
+INSERT INTO `temp` (`id`, `tgl_booking`, `id_user`, `email_user`, `id_buku`, `judul_buku`, `image`, `penulis`, `penerbit`, `tahun_terbit`) VALUES
+(1, '2022-06-12 12:11:18', '1', 'yanameli1707@gmail.com', 2, 'Mudah Belajar Komputer untuk Anak', 'img1557402397.jpg', 'Bambang Agus Setiawan', 'Huta Media', 2014);
 
 -- --------------------------------------------------------
 
@@ -250,6 +286,12 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pinjam`
 --
 ALTER TABLE `pinjam`
@@ -281,7 +323,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `booking_detail`
 --
 ALTER TABLE `booking_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `buku`
@@ -296,6 +338,12 @@ ALTER TABLE `kategori`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
@@ -305,7 +353,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
