@@ -36,7 +36,6 @@ eet" type="text/css">
                     <?php } ?>
                     <span class="nav-item nav-link nav-right" style="display:block; margin-left:20px;">Selamat Datang <b><?= $user; ?></b></span>
                 </div>
-                12
             </div>
         </div>
     </nav>
